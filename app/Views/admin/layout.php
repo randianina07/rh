@@ -1,33 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= esc($title ?? 'Admin') ?> — TechMada RH</title>
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-            --bg:        #0f1117;
-            --surface:   #1a1d27;
-            --border:    #2a2d3a;
-            --accent:    #6c63ff;
-            --accent2:   #00d4aa;
-            --danger:    #ff4d6d;
-            --warning:   #ffb347;
-            --text:      #e2e4ef;
-            --muted:     #7a7f99;
-            --sidebar-w: 240px;
-        }
-
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            display: flex;
-            min-height: 100vh;
-            font-size: 14px;
-        }
+<?= $this->include('shared/layout', ['role' => 'admin']) ?>
 
         /* ---- SIDEBAR ---- */
         .sidebar {
