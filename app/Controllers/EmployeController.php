@@ -41,27 +41,34 @@ class EmployeController extends BaseController
         return view('employe/index', $data); 
     }
 
-    /**
-     * Affiche le formulaire de création
-     * Route: /employe/conges/new
+   
+  /**
+     * Affiche le formulaire de création de congé
      */
     public function newConge()
     {
-        // On récupère les types de congés pour le menu déroulant
-        $data['types'] = $this->db->table('types_conge')->get()->getResultArray();
-        
-        // On récupère les soldes pour l'affichage latéral
-        $data['soldes'] = $this->db->table('soldes s')
-            ->select('s.*, tc.libelle')
-            ->join('types_conge tc', 'tc.id = s.type_conge_id')
-            ->where('s.employe_id', session()->get('user_id'))
-            ->where('s.annee', date('Y'))
+        $userId = session()->get('user_id');
+        $currentYear = date('Y');
+    
+        // 1. Récupération des types avec calcul du solde restant pour le <select>
+        $data['types'] = $this->db->table('types_conge tc')
+            ->select('tc.*, (s.jours_attribues - s.jours_pris) as jours_restants')
+            ->join('soldes s', 's.type_conge_id = tc.id')
+            ->where('s.employe_id', $userId)
+            ->where('s.annee', $currentYear)
             ->get()->getResultArray();
-
+        
+        // 2. Récupération des soldes pour le panneau latéral (Barres de progression)
+        $data['soldes'] = $this->db->table('soldes s')
+            ->select('s.*, tc.libelle, (s.jours_attribues - s.jours_pris) as jours_restants')
+            ->join('types_conge tc', 'tc.id = s.type_conge_id')
+            ->where('s.employe_id', $userId)
+            ->where('s.annee', $currentYear)
+            ->get()->getResultArray();
+    
         $data['title'] = "Nouvelle demande";
         return view('employe/create', $data);
     }
-
     /**
      * Traite la soumission du formulaire
      * Route: /employe/conges/create
