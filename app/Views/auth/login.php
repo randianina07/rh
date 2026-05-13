@@ -35,7 +35,7 @@
       </div>
       <div class="role-pill">
         <i class="bi bi-person"></i>
-        <div><div class="role-pill-name">Employé</div><div class="role-pill-cred">employe@techmada.mg · emp123</div></div>
+        <div><div class="role-pill-name">Employé</div><div class="role-pill-cred">soatechmada@techmada.mg · password123</div></div>
       </div>
     </div>
   </div>

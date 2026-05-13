@@ -5,28 +5,20 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+// Routes publiques (SANS FILTRE)
 $routes->get('/', 'AuthController::login');
-$routes->get('/login', 'AuthController::login');
-$routes->post('/authenticate', 'AuthController::authenticate'); 
-$routes->get('/logout', 'AuthController::logout');
+$routes->get('login', 'AuthController::login');
+$routes->post('authenticate', 'AuthController::authenticate'); 
+$routes->get('logout', 'AuthController::logout');
 
+// Groupe Employé (AVEC FILTRE)
 $routes->group('employe', ['filter' => 'role:employe'], function($routes) {
-    // dashboard
     $routes->get('dashboard', 'EmployeController::index');
-    // demandes de congé
-    $routes->get('conges', 'EmployeController::mesConges');
-    // formulaire demande
+    $routes->get('conges', 'EmployeController::mesConges'); 
     $routes->get('conges/new', 'EmployeController::newConge');
-    // soumission
     $routes->post('conges/create', 'EmployeController::createConge');
-    // annulation
     $routes->post('conges/annuler/(:num)', 'EmployeController::annulerConge/$1');
-    // solde
-    $routes->get('soldes', 'EmployeController::mesSoldes');
-    // profil
     $routes->get('profil', 'EmployeController::profil');
-
-    $routes->post('profil/update', 'EmployeController::updateProfil');
 });
 
 $routes->group('rh', ['filter' => 'role:rh'], function($routes) {
