@@ -57,7 +57,7 @@ class Database extends Config
     //     * @var array<string, mixed>
     //     */
        public array $default = [
-           'database'    => 'rh.db',
+           'database'    => ROOTPATH . 'rh.db',
            'DBDriver'    => 'SQLite3',
            'DBPrefix'    => '',
            'DBDebug'     => true,
