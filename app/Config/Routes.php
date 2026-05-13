@@ -5,9 +5,9 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'AuthController::showLoginForm');
-$routes->get('/login', 'AuthController::showLoginForm');
-$routes->post('/login', 'AuthController::login');
+$routes->get('/', 'AuthController::login');
+$routes->get('/login', 'AuthController::login');
+$routes->post('/authenticate', 'AuthController::authenticate'); 
 $routes->get('/logout', 'AuthController::logout');
 
 $routes->group('employe', ['filter' => 'role:employe'], function($routes) {
