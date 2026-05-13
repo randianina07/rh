@@ -67,8 +67,10 @@ class CongeModel extends Model
     public function getCongeById($id)
     {
         $builder = $this->builder();
-        $builder->select('id, employe_id, type_conge_id, date_debut, date_fin, nb_jours, motif, statut, commentaire_rh, created_at, traite_par');
-        $builder->where('id', $id);
+        $builder->select('conges.*, employes.nom, employes.prenom, employes.departement_id, types_conge.libelle');
+        $builder->join('employes', 'employes.id = conges.employe_id');
+        $builder->join('types_conge', 'types_conge.id = conges.type_conge_id');
+        $builder->where('conges.id', $id);
         return $builder->get()->getRow();
     }
 
@@ -105,33 +107,49 @@ class CongeModel extends Model
         $builder->select('conges.*, employes.nom, employes.prenom, types_conge.libelle');
         $builder->join('employes', 'employes.id = conges.employe_id');
         $builder->join('types_conge', 'types_conge.id = conges.type_conge_id');
-        $builder->where('statut', 'en_attente');
+        $builder->where('conges.statut', 'en_attente');
         $builder->orderBy('conges.created_at', 'DESC');
         return $builder->get()->getResult();
     }
 
-    public function countDemandeEnAttente()
+    public function countCongesByStatut($statut = 'en_attente')
     {
         $builder = $this->builder();
-        $builder->where('statut', 'en_attente');
+        $builder->where('statut', $statut);
         return $builder->countAllResults();
     }
 
-    public function countDemandeApprouve()
+    public function getEmployesAbsents()
     {
         $builder = $this->builder();
-        $builder->where('statut', 'approuvee');
-        return $builder->countAllResults();
-
+        $builder->select('employes.nom, employes.prenom, conges.date_debut, conges.date_fin');
+        $builder->join('employes', 'employes.id = conges.employe_id');
+        $builder->where('conges.statut', 'accepte');
+        $builder->where('date_debut <= CURDATE()', null, false);
+        $builder->where('date_fin >= CURDATE()', null, false);
+        return $builder->get()->getResult();
     }
 
-    public function getCongeParStatut($statut)
+    public function countEmployesAbsents()
+    {
+        $builder = $this->builder();
+        $builder->where('statut', 'accepte');
+        $builder->where('date_debut <= CURDATE()', null, false);
+        $builder->where('date_fin >= CURDATE()', null, false);
+        return $builder->countAllResults();
+    }
+
+    public function getCongeParStatut($statut = null)
     {
         $builder = $this->builder();
         $builder->select('conges.*, employes.nom, employes.prenom, types_conge.libelle');
         $builder->join('employes', 'employes.id = conges.employe_id');
         $builder->join('types_conge', 'types_conge.id = conges.type_conge_id');
-        $builder->where('statut', $statut);
+
+        if (!empty($statut)) {
+            $builder->where('conges.statut', $statut);
+        }
+
         $builder->orderBy('conges.created_at', 'DESC');
         return $builder->get()->getResult();
     }
@@ -147,27 +165,94 @@ class CongeModel extends Model
         return $builder->get()->getResult();
     }
 
+    public function getCongesFiltered($departement_id = null, $statut = null)
+    {
+        $builder = $this->builder();
+        $builder->select('conges.*, employes.nom, employes.prenom, types_conge.libelle, employes.departement_id');
+        $builder->join('employes', 'employes.id = conges.employe_id');
+        $builder->join('types_conge', 'types_conge.id = conges.type_conge_id');
+
+        if (!empty($departement_id)) {
+            $builder->where('employes.departement_id', $departement_id);
+        }
+
+        if (!empty($statut)) {
+            $builder->where('conges.statut', $statut);
+        }
+
+        $builder->orderBy('conges.created_at', 'DESC');
+        return $builder->get()->getResult();
+    }
+
     public function accepterConge($id, $rh_id, $commentaire = '')
     {
-        $data = [
-            'statut' => 'approuvee',
+        $conge = $this->getCongeById($id);
+        if (empty($conge)) {
+            return false;
+        }
+
+        $annee = date('Y', strtotime($conge->date_debut));
+        $soldeModel = new \App\Models\SoldeModel();
+        $solde = $soldeModel->getSoldeFor($conge->employe_id, $conge->type_conge_id, $annee);
+
+        if (empty($solde)) {
+            return false;
+        }
+
+        $restant = $solde->jours_attribues - $solde->jours_pris;
+        if ($conge->nb_jours > $restant) {
+            return ['success' => false, 'error' => 'Solde insuffisant'];
+        }
+
+        $db = db_connect();
+        $db->transStart();
+
+        $this->update($id, [
+            'statut' => 'accepte',
             'traite_par' => $rh_id,
             'commentaire_rh' => $commentaire,
-        ];
-        $builder = $this->builder();
-        $builder->where('id', $id);
-        return $builder->update($data);
+        ]);
+
+        $soldeModel->adjustJoursPris($solde->id, $conge->nb_jours);
+
+        $db->transComplete();
+
+        if ($db->transStatus() === false) {
+            return ['success' => false, 'error' => 'Erreur base de données lors de l\'approbation'];
+        }
+
+        return ['success' => true];
     }
 
     public function refuserConge($id, $rh_id, $commentaire = '')
     {
-        $data = [
-            'statut' => 'refusee',
+        $conge = $this->getCongeById($id);
+        if (empty($conge)) {
+            return false;
+        }
+
+        $wasAccepted = ($conge->statut === 'accepte');
+
+        $db = db_connect();
+        $db->transStart();
+
+        $this->update($id, [
+            'statut' => 'refuse',
             'traite_par' => $rh_id,
             'commentaire_rh' => $commentaire,
-        ];
-        $builder = $this->builder();
-        $builder->where('id', $id);
-        return $builder->update($data);
+        ]);
+
+        if ($wasAccepted) {
+            $annee = date('Y', strtotime($conge->date_debut));
+            $soldeModel = new \App\Models\SoldeModel();
+            $solde = $soldeModel->getSoldeFor($conge->employe_id, $conge->type_conge_id, $annee);
+            if (!empty($solde)) {
+                $soldeModel->adjustJoursPris($solde->id, -1 * $conge->nb_jours);
+            }
+        }
+
+        $db->transComplete();
+
+        return $db->transStatus();
     }
 }
