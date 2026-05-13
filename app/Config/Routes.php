@@ -5,14 +5,14 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'AuthController::showLoginForm');
-$routes->get('/login', 'AuthController::showLoginForm');
-$routes->post('/login', 'AuthController::login');
+$routes->get('/', 'AuthController::login');
+$routes->get('/login', 'AuthController::login');
+$routes->post('/authenticate', 'AuthController::authenticate'); 
 $routes->get('/logout', 'AuthController::logout');
 
 $routes->group('employe', ['filter' => 'role:employe'], function($routes) {
     // dashboard
-    $routes->get('/', 'EmployeController::index');
+    $routes->get('dashboard', 'EmployeController::index');
     // demandes de congé
     $routes->get('conges', 'EmployeController::mesConges');
     // formulaire demande
@@ -31,7 +31,7 @@ $routes->group('employe', ['filter' => 'role:employe'], function($routes) {
 
 $routes->group('rh', ['filter' => 'role:rh'], function($routes) {
     // dashboard
-    $routes->get('/', 'RHController::index');
+    $routes->get('dashboard', 'RHController::index');
     // toutes les demandes
     $routes->get('conges', 'RHController::listeConges');
     // détail demande
@@ -50,7 +50,7 @@ $routes->group('rh', ['filter' => 'role:rh'], function($routes) {
 
 $routes->group('admin', ['filter' => 'role:admin'], function($routes) {
     // dashboard
-    $routes->get('/', 'AdminController::index');
+    $routes->get('dashboard', 'AdminController::index');
 
     // Employés
     $routes->get('employes', 'AdminController::employes');
