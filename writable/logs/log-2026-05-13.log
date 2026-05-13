@@ -1,0 +1,108 @@
+ERROR - 2026-05-13 06:42:34 --> Error connecting to the database: Error: Class "SQLite3" not found in /home/sundy/s4/SI/tp/rh/system/Database/SQLite3/Connection.php:111
+Stack trace:
+#0 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(555): CodeIgniter\Database\SQLite3\Connection->connect()
+#1 /home/sundy/s4/SI/tp/rh/system/Database/SQLite3/Connection.php(74): CodeIgniter\Database\BaseConnection->initialize()
+#2 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(795): CodeIgniter\Database\SQLite3\Connection->initialize()
+#3 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(1706): CodeIgniter\Database\BaseConnection->query()
+#4 /home/sundy/s4/SI/tp/rh/system/Commands/Database/ShowTableInfo.php(121): CodeIgniter\Database\BaseConnection->listTables()
+#5 /home/sundy/s4/SI/tp/rh/system/CLI/Commands.php(74): CodeIgniter\Commands\Database\ShowTableInfo->run()
+#6 /home/sundy/s4/SI/tp/rh/system/CLI/Console.php(47): CodeIgniter\CLI\Commands->run()
+#7 /home/sundy/s4/SI/tp/rh/system/Boot.php(442): CodeIgniter\CLI\Console->run()
+#8 /home/sundy/s4/SI/tp/rh/system/Boot.php(166): CodeIgniter\Boot::runCommand()
+#9 /home/sundy/s4/SI/tp/rh/spark(87): CodeIgniter\Boot::bootSpark()
+#10 {main}
+CRITICAL - 2026-05-13 06:42:34 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [SQLite3]: Class "SQLite3" not found
+[Method: CLI, Route: db:table]
+in SYSTEMPATH/Database/BaseConnection.php on line 606.
+ 1 SYSTEMPATH/Database/SQLite3/Connection.php(74): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseConnection.php(795): CodeIgniter\Database\SQLite3\Connection->initialize()
+ 3 SYSTEMPATH/Database/BaseConnection.php(1706): CodeIgniter\Database\BaseConnection->query()
+ 4 SYSTEMPATH/Commands/Database/ShowTableInfo.php(121): CodeIgniter\Database\BaseConnection->listTables()
+ 5 SYSTEMPATH/CLI/Commands.php(74): CodeIgniter\Commands\Database\ShowTableInfo->run()
+ 6 SYSTEMPATH/CLI/Console.php(47): CodeIgniter\CLI\Commands->run()
+ 7 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
+ 8 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand()
+ 9 ROOTPATH/spark(87): CodeIgniter\Boot::bootSpark()
+ERROR - 2026-05-13 06:45:58 --> Error connecting to the database: Exception: Unable to open database: unable to open database file in /home/sundy/s4/SI/tp/rh/system/Database/SQLite3/Connection.php:111
+Stack trace:
+#0 /home/sundy/s4/SI/tp/rh/system/Database/SQLite3/Connection.php(111): SQLite3->__construct()
+#1 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(555): CodeIgniter\Database\SQLite3\Connection->connect()
+#2 /home/sundy/s4/SI/tp/rh/system/Database/SQLite3/Connection.php(74): CodeIgniter\Database\BaseConnection->initialize()
+#3 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(795): CodeIgniter\Database\SQLite3\Connection->initialize()
+#4 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(1706): CodeIgniter\Database\BaseConnection->query()
+#5 /home/sundy/s4/SI/tp/rh/system/Commands/Database/ShowTableInfo.php(121): CodeIgniter\Database\BaseConnection->listTables()
+#6 /home/sundy/s4/SI/tp/rh/system/CLI/Commands.php(74): CodeIgniter\Commands\Database\ShowTableInfo->run()
+#7 /home/sundy/s4/SI/tp/rh/system/CLI/Console.php(47): CodeIgniter\CLI\Commands->run()
+#8 /home/sundy/s4/SI/tp/rh/system/Boot.php(442): CodeIgniter\CLI\Console->run()
+#9 /home/sundy/s4/SI/tp/rh/system/Boot.php(166): CodeIgniter\Boot::runCommand()
+#10 /home/sundy/s4/SI/tp/rh/spark(87): CodeIgniter\Boot::bootSpark()
+#11 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: SQLite3 error: Unable to open database: unable to open database file in /home/sundy/s4/SI/tp/rh/system/Database/SQLite3/Connection.php:118
+Stack trace:
+#0 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(555): CodeIgniter\Database\SQLite3\Connection->connect()
+#1 /home/sundy/s4/SI/tp/rh/system/Database/SQLite3/Connection.php(74): CodeIgniter\Database\BaseConnection->initialize()
+#2 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(795): CodeIgniter\Database\SQLite3\Connection->initialize()
+#3 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(1706): CodeIgniter\Database\BaseConnection->query()
+#4 /home/sundy/s4/SI/tp/rh/system/Commands/Database/ShowTableInfo.php(121): CodeIgniter\Database\BaseConnection->listTables()
+#5 /home/sundy/s4/SI/tp/rh/system/CLI/Commands.php(74): CodeIgniter\Commands\Database\ShowTableInfo->run()
+#6 /home/sundy/s4/SI/tp/rh/system/CLI/Console.php(47): CodeIgniter\CLI\Commands->run()
+#7 /home/sundy/s4/SI/tp/rh/system/Boot.php(442): CodeIgniter\CLI\Console->run()
+#8 /home/sundy/s4/SI/tp/rh/system/Boot.php(166): CodeIgniter\Boot::runCommand()
+#9 /home/sundy/s4/SI/tp/rh/spark(87): CodeIgniter\Boot::bootSpark()
+#10 {main}
+CRITICAL - 2026-05-13 06:45:58 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [SQLite3]: SQLite3 error: Unable to open database: unable to open database file
+[Method: CLI, Route: db:table]
+in SYSTEMPATH/Database/BaseConnection.php on line 606.
+ 1 SYSTEMPATH/Database/SQLite3/Connection.php(74): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseConnection.php(795): CodeIgniter\Database\SQLite3\Connection->initialize()
+ 3 SYSTEMPATH/Database/BaseConnection.php(1706): CodeIgniter\Database\BaseConnection->query()
+ 4 SYSTEMPATH/Commands/Database/ShowTableInfo.php(121): CodeIgniter\Database\BaseConnection->listTables()
+ 5 SYSTEMPATH/CLI/Commands.php(74): CodeIgniter\Commands\Database\ShowTableInfo->run()
+ 6 SYSTEMPATH/CLI/Console.php(47): CodeIgniter\CLI\Commands->run()
+ 7 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
+ 8 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand()
+ 9 ROOTPATH/spark(87): CodeIgniter\Boot::bootSpark()
+ERROR - 2026-05-13 06:46:17 --> Error connecting to the database: Exception: Unable to open database: unable to open database file in /home/sundy/s4/SI/tp/rh/system/Database/SQLite3/Connection.php:111
+Stack trace:
+#0 /home/sundy/s4/SI/tp/rh/system/Database/SQLite3/Connection.php(111): SQLite3->__construct()
+#1 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(555): CodeIgniter\Database\SQLite3\Connection->connect()
+#2 /home/sundy/s4/SI/tp/rh/system/Database/SQLite3/Connection.php(74): CodeIgniter\Database\BaseConnection->initialize()
+#3 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(795): CodeIgniter\Database\SQLite3\Connection->initialize()
+#4 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(1706): CodeIgniter\Database\BaseConnection->query()
+#5 /home/sundy/s4/SI/tp/rh/system/Commands/Database/ShowTableInfo.php(121): CodeIgniter\Database\BaseConnection->listTables()
+#6 /home/sundy/s4/SI/tp/rh/system/CLI/Commands.php(74): CodeIgniter\Commands\Database\ShowTableInfo->run()
+#7 /home/sundy/s4/SI/tp/rh/system/CLI/Console.php(47): CodeIgniter\CLI\Commands->run()
+#8 /home/sundy/s4/SI/tp/rh/system/Boot.php(442): CodeIgniter\CLI\Console->run()
+#9 /home/sundy/s4/SI/tp/rh/system/Boot.php(166): CodeIgniter\Boot::runCommand()
+#10 /home/sundy/s4/SI/tp/rh/spark(87): CodeIgniter\Boot::bootSpark()
+#11 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: SQLite3 error: Unable to open database: unable to open database file in /home/sundy/s4/SI/tp/rh/system/Database/SQLite3/Connection.php:118
+Stack trace:
+#0 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(555): CodeIgniter\Database\SQLite3\Connection->connect()
+#1 /home/sundy/s4/SI/tp/rh/system/Database/SQLite3/Connection.php(74): CodeIgniter\Database\BaseConnection->initialize()
+#2 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(795): CodeIgniter\Database\SQLite3\Connection->initialize()
+#3 /home/sundy/s4/SI/tp/rh/system/Database/BaseConnection.php(1706): CodeIgniter\Database\BaseConnection->query()
+#4 /home/sundy/s4/SI/tp/rh/system/Commands/Database/ShowTableInfo.php(121): CodeIgniter\Database\BaseConnection->listTables()
+#5 /home/sundy/s4/SI/tp/rh/system/CLI/Commands.php(74): CodeIgniter\Commands\Database\ShowTableInfo->run()
+#6 /home/sundy/s4/SI/tp/rh/system/CLI/Console.php(47): CodeIgniter\CLI\Commands->run()
+#7 /home/sundy/s4/SI/tp/rh/system/Boot.php(442): CodeIgniter\CLI\Console->run()
+#8 /home/sundy/s4/SI/tp/rh/system/Boot.php(166): CodeIgniter\Boot::runCommand()
+#9 /home/sundy/s4/SI/tp/rh/spark(87): CodeIgniter\Boot::bootSpark()
+#10 {main}
+CRITICAL - 2026-05-13 06:46:17 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [SQLite3]: SQLite3 error: Unable to open database: unable to open database file
+[Method: CLI, Route: db:table]
+in SYSTEMPATH/Database/BaseConnection.php on line 606.
+ 1 SYSTEMPATH/Database/SQLite3/Connection.php(74): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseConnection.php(795): CodeIgniter\Database\SQLite3\Connection->initialize()
+ 3 SYSTEMPATH/Database/BaseConnection.php(1706): CodeIgniter\Database\BaseConnection->query()
+ 4 SYSTEMPATH/Commands/Database/ShowTableInfo.php(121): CodeIgniter\Database\BaseConnection->listTables()
+ 5 SYSTEMPATH/CLI/Commands.php(74): CodeIgniter\Commands\Database\ShowTableInfo->run()
+ 6 SYSTEMPATH/CLI/Console.php(47): CodeIgniter\CLI\Commands->run()
+ 7 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
+ 8 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand()
+ 9 ROOTPATH/spark(87): CodeIgniter\Boot::bootSpark()
