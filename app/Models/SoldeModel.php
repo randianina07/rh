@@ -86,4 +86,16 @@ class SoldeModel extends Model
         $builder->where('id', $id);
         return $builder->delete();
     }
+
+    public function getSoldeFor($employe_id, $type_conge_id, $annee)
+    {
+        return $this->where(['employe_id' => $employe_id, 'type_conge_id' => $type_conge_id, 'annee' => $annee])->first();
+    }
+
+    public function adjustJoursPris($id, $delta)
+    {
+        return $this->set('jours_pris', "jours_pris + ({$delta})", false)
+                    ->where('id', $id)
+                    ->update();
+    }
 }

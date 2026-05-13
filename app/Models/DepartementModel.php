@@ -32,7 +32,7 @@ class DepartementModel extends Model
     public function getAllDepartements()
     {
         $builder = $this->builder();
-        $builder->select('nom, description');
+        $builder->select('id, nom, description');
         return $builder->get()->getResult();
     }
 
