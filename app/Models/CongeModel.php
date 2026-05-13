@@ -98,4 +98,76 @@ class CongeModel extends Model
         $builder->where('id', $id);
         return $builder->delete();
     }
+
+    public function getDemandeEnAttente()
+    {
+        $builder = $this->builder();
+        $builder->select('conges.*, employes.nom, employes.prenom, types_conge.libelle');
+        $builder->join('employes', 'employes.id = conges.employe_id');
+        $builder->join('types_conge', 'types_conge.id = conges.type_conge_id');
+        $builder->where('statut', 'en_attente');
+        $builder->orderBy('conges.created_at', 'DESC');
+        return $builder->get()->getResult();
+    }
+
+    public function countDemandeEnAttente()
+    {
+        $builder = $this->builder();
+        $builder->where('statut', 'en_attente');
+        return $builder->countAllResults();
+    }
+
+    public function countDemandeApprouve()
+    {
+        $builder = $this->builder();
+        $builder->where('statut', 'approuvee');
+        return $builder->countAllResults();
+
+    }
+
+    public function getCongeParStatut($statut)
+    {
+        $builder = $this->builder();
+        $builder->select('conges.*, employes.nom, employes.prenom, types_conge.libelle');
+        $builder->join('employes', 'employes.id = conges.employe_id');
+        $builder->join('types_conge', 'types_conge.id = conges.type_conge_id');
+        $builder->where('statut', $statut);
+        $builder->orderBy('conges.created_at', 'DESC');
+        return $builder->get()->getResult();
+    }
+
+    public function getCongeParDepartement($departement_id)
+    {
+        $builder = $this->builder();
+        $builder->select('conges.*, employes.nom, employes.prenom, types_conge.libelle');
+        $builder->join('employes', 'employes.id = conges.employe_id');
+        $builder->join('types_conge', 'types_conge.id = conges.type_conge_id');
+        $builder->where('employes.departement_id', $departement_id);
+        $builder->orderBy('conges.created_at', 'DESC');
+        return $builder->get()->getResult();
+    }
+
+    public function accepterConge($id, $rh_id, $commentaire = '')
+    {
+        $data = [
+            'statut' => 'approuvee',
+            'traite_par' => $rh_id,
+            'commentaire_rh' => $commentaire,
+        ];
+        $builder = $this->builder();
+        $builder->where('id', $id);
+        return $builder->update($data);
+    }
+
+    public function refuserConge($id, $rh_id, $commentaire = '')
+    {
+        $data = [
+            'statut' => 'refusee',
+            'traite_par' => $rh_id,
+            'commentaire_rh' => $commentaire,
+        ];
+        $builder = $this->builder();
+        $builder->where('id', $id);
+        return $builder->update($data);
+    }
 }

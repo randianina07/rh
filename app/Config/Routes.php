@@ -31,21 +31,21 @@ $routes->group('employe', ['filter' => 'role:employe'], function($routes) {
 
 $routes->group('rh', ['filter' => 'role:rh'], function($routes) {
     // dashboard
-    $routes->get('dashboard', 'RHController::index');
+    $routes->get('dashboard', 'RhController::index');
     // toutes les demandes
-    $routes->get('conges', 'RHController::listeConges');
+    $routes->get('conges', 'RhController::listeConges');
     // détail demande
-    $routes->get('conges/(:num)', 'RHController::detailConge/$1');
+    $routes->get('conges/(:num)', 'RhController::detailConge/$1');
     // approuver
-    $routes->post('conges/approuver/(:num)', 'RHController::approuver/$1');
+    $routes->post('conges/approuver/(:num)', 'RhController::approuver/$1');
     // refuser
-    $routes->post('conges/refuser/(:num)', 'RHController::refuser/$1');
+    $routes->post('conges/refuser/(:num)', 'RhController::refuser/$1');
     // soldes employés
-    $routes->get('soldes', 'RHController::soldes');
+    $routes->get('soldes', 'RhController::soldes');
     // filtrage
-    $routes->get('conges/statut/(:any)', 'RHController::filtrerStatut/$1');
+    $routes->get('conges/statut/(:any)', 'RhController::filtrerStatut/$1');
 
-    $routes->get('conges/departement/(:num)', 'RHController::filtrerDepartement/$1');
+    $routes->get('conges/departement/(:num)', 'RhController::filtrerDepartement/$1');
 });
 
 $routes->group('admin', ['filter' => 'role:admin'], function($routes) {
