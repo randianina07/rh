@@ -36,6 +36,20 @@
   </div>
 </form>
 
+<div class="mb-3">
+  <div class="mb-2"><strong>Filtrer par statut :</strong></div>
+  <a class="btn btn-sm btn-outline-primary me-1" href="<?= site_url('rh/conges/statut/en_attente') ?>">En attente</a>
+  <a class="btn btn-sm btn-outline-success me-1" href="<?= site_url('rh/conges/statut/accepte') ?>">Accepté</a>
+  <a class="btn btn-sm btn-outline-danger me-1" href="<?= site_url('rh/conges/statut/refuse') ?>">Refusé</a>
+</div>
+
+<div class="mb-4">
+  <div class="mb-2"><strong>Filtrer par département :</strong></div>
+  <?php if (!empty($departements)): foreach ($departements as $d): ?>
+    <a class="btn btn-sm btn-outline-secondary me-1 mb-1" href="<?= site_url('rh/conges/departement/'.$d->id) ?>"><?= esc($d->nom) ?></a>
+  <?php endforeach; endif ?>
+</div>
+
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
